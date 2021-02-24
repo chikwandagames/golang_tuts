@@ -2,50 +2,28 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"sort"
 )
 
-// POLYMORPHSM, the area() method behave differently depending
-// on the type of shape you call it using
+type people []string
 
-// Square and Circle are concreate types
-// Square is ...
-type Square struct {
-	side float64
-}
-
-// Circle is ...
-type Circle struct {
-	radius float64
-}
-
-// Shape is an INTERFACE, abstract type
-// so now anything that has the area() float64 method
-// implements the Shape interface
-type Shape interface {
-	area() float64
-}
-
-// Here we attach a method to the type Square
-// i.e. Square now implements the shape interface
-func (z Square) area() float64 {
-	return z.side * z.side
-}
-
-// Here we attach a method to the type circle
-func (c Circle) area() float64 {
-	return math.Pi * c.radius * c.radius
-}
-
-// info() can take an circle or square
-func info(z Shape) {
-	fmt.Println(z)
-	fmt.Println(z.area())
-}
+// people has to implement all the methods (method set) of the sort interface
+// called the Interface interface
+func (p people) Len() int           { return len(p) }
+func (p people) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p people) Less(i, j int) bool { return p[i] < p[j] }
 
 func main() {
-	s := Square{10}
-	info(s)
-	c := Circle{5}
-	info(c)
+	studyGroup := people{"Zeno", "John", "Al", "Jenny"}
+
+	fmt.Println(studyGroup)
+	sort.Sort(studyGroup)
+	fmt.Println(studyGroup)
+
+	// Sorting a sclice
+	s := []string{"Louis", "Rimo", "Brendon", "Dave", "Declan", "Tompy", "Wisdom"}
+	fmt.Println(s)
+	// StringSlice implement the Interface interface
+	sort.Sort(sort.StringSlice(s))
+	fmt.Println(s)
 }
