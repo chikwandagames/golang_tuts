@@ -8,6 +8,7 @@ import (
 // POLYMORPHSM, the area() method behave differently depending
 // on the type of shape you call it using
 
+// Square and Circle are concreate types
 // Square is ...
 type Square struct {
 	side float64
@@ -18,7 +19,7 @@ type Circle struct {
 	radius float64
 }
 
-// Shape is an INTERFACE
+// Shape is an INTERFACE, abstract type
 // so now anything that has the area() float64 method
 // implements the Shape interface
 type Shape interface {
