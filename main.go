@@ -2,17 +2,19 @@ package main
 
 import "fmt"
 
-var y = 43
+var a int
+
+// Custom type int
+type hotdog int
+
+var b hotdog
 
 func main() {
 
-	fmt.Println(y)
-	fmt.Printf("%v \n", y)
-	fmt.Printf("%T \n", y)
-	fmt.Printf("%b \n", y)
-	fmt.Printf("%#x \t %b \t %x \n", y, y, y)
+	// Type conversion, coverting "b" into an int, which is its
+	// underlying type
+	c := int(b)
 
-	// Sprint(), prints to a string
-	s := fmt.Sprintf("%#x \t %b \t %x \n", y, y, y)
-	fmt.Println(s)
+	fmt.Printf("%T \n", b)
+	fmt.Printf("%T \n", c)
 }
