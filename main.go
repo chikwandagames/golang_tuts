@@ -3,14 +3,24 @@ package main
 import "fmt"
 
 func main() {
-	x, y := mouse("Ian", "Flemming")
-	fmt.Println(x)
-	fmt.Println(y)
 
+	foo(1, 2, 3, 4, 5)
+	r := sum(1, 2, 3, 4, 5)
+	fmt.Printf("total = %v \n", r)
 }
 
-func mouse(fn string, ln string) (string, bool) {
-	a := fmt.Sprintln(fn, ln+`, says "hello"`)
-	b := false
-	return a, b
+func foo(x ...int) {
+	// x, will be stored as a slice of ints, []int
+	fmt.Println(x)
+	fmt.Printf("%T\n", x)
+}
+
+// x, will be stored as a slice of ints, []int
+func sum(x ...int) int {
+	sum := 0
+	for i, v := range x {
+		fmt.Printf("%v: %v + %v = %v \n", i, sum, v, v+sum)
+		sum += v
+	}
+	return sum
 }
