@@ -2,23 +2,15 @@ package main
 
 import "fmt"
 
-// we define functions with parameters
-// we call our function and pass in arguments
-// everythin in go is PASS BY VALUE
-
 func main() {
-	printName("wisdom")
+	x, y := mouse("Ian", "Flemming")
+	fmt.Println(x)
+	fmt.Println(y)
 
-	s1 := foo("David")
-	fmt.Println(s1)
 }
 
-// func (r receiver) ideintifire(parameters) (return(s)) { ... }
-func printName(s string) {
-	fmt.Printf("Hello %v\n", s)
-}
-
-func foo(st string) string {
-	// StringPrint, prints to a string
-	return fmt.Sprint("Hello from ", st)
+func mouse(fn string, ln string) (string, bool) {
+	a := fmt.Sprintln(fn, ln+`, says "hello"`)
+	b := false
+	return a, b
 }
