@@ -12,7 +12,7 @@ const c = "James Bond"
 // Alternaive definistion
 const (
 	d        = 34
-	e string = "Wisdom" // this const is type, therefore cannot be changed
+	e string = "Wisdom" // this const is typed, therefore cannot be changed
 )
 
 func main() {
