@@ -2,19 +2,24 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 )
 
-// byte is and alias for uint8
-// rune is and alias for uint32
-
-/*
-	Package runtime contains operations that interact with Go's runtime system,
-	such as functions to control goroutines. It also includes the low-level type
-	information used by the reflect package
-*/
 func main() {
-	// Runtime package give details about the
-	fmt.Println(runtime.GOOS)
-	fmt.Println(runtime.GOARCH)
+	// A string is a sequence of bytes (slice of bytes)
+	// Strings are immutable
+	s := "hello golang"
+	fmt.Println(s)
+	fmt.Printf("%T \n", s)
+
+	bs := []byte(s)
+	fmt.Println("ASCII values of the string:", bs)
+	fmt.Printf("%T \n", bs)
+
+	for i := 0; i < len(s); i++ {
+		fmt.Printf("ASCII: %v, utf8 or rune: %#U \n", s[i], s[i])
+	}
+
+	for i, v := range s {
+		fmt.Printf("index: %d, hev: %#x, ASCII: %v \n", i, v, s[i])
+	}
 }
