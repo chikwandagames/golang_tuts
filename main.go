@@ -1,20 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-var a int
+// byte is and alias for uint8
+// rune is and alias for uint32
 
-// Custom type int
-type hotdog int
-
-var b hotdog
-
+/*
+	Package runtime contains operations that interact with Go's runtime system,
+	such as functions to control goroutines. It also includes the low-level type
+	information used by the reflect package
+*/
 func main() {
-
-	// Type conversion, coverting "b" into an int, which is its
-	// underlying type
-	c := int(b)
-
-	fmt.Printf("%T \n", b)
-	fmt.Printf("%T \n", c)
+	// Runtime package give details about the
+	fmt.Println(runtime.GOOS)
+	fmt.Println(runtime.GOARCH)
 }
