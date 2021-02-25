@@ -4,22 +4,23 @@ import (
 	"fmt"
 )
 
+// untyped constants are known as constant of a kind
+const a = 42
+const b = 42.47
+const c = "James Bond"
+
+// Alternaive definistion
+const (
+	d        = 34
+	e string = "Wisdom" // this const is type, therefore cannot be changed
+)
+
 func main() {
-	// A string is a sequence of bytes (slice of bytes)
-	// Strings are immutable
-	s := "hello golang"
-	fmt.Println(s)
-	fmt.Printf("%T \n", s)
+	fmt.Println(a)
+	fmt.Println(b)
+	fmt.Println(c)
+	fmt.Printf("%T\n", a)
+	fmt.Printf("%T\n", b)
+	fmt.Printf("%T\n", c)
 
-	bs := []byte(s)
-	fmt.Println("ASCII values of the string:", bs)
-	fmt.Printf("%T \n", bs)
-
-	for i := 0; i < len(s); i++ {
-		fmt.Printf("ASCII: %v, utf8 or rune: %#U \n", s[i], s[i])
-	}
-
-	for i, v := range s {
-		fmt.Printf("index: %d, hev: %#x, ASCII: %v \n", i, v, s[i])
-	}
 }
