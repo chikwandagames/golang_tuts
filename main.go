@@ -3,28 +3,19 @@ package main
 import "fmt"
 
 func main() {
-	x := 1
-	// for statemaent with single condition
-	for x < 5 {
-		fmt.Println(x)
-		x++
-	}
+	x := 0
 
-	fmt.Println("")
-	// this for is like a while loop
-	j := 1
 	for {
-		if j > 5 {
+		x++
+		if x > 10 {
 			break
 		}
-		fmt.Println(j)
-		j++
-	}
+		if x%2 != 0 {
+			continue
+		}
 
-	fmt.Println("")
-	// for statement with a clause
-	for i := 0; i < 5; i++ {
-		fmt.Println(i)
+		fmt.Println(x)
+
 	}
 
 }
