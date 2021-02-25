@@ -4,15 +4,19 @@ import (
 	"fmt"
 )
 
-// untyped constants are known as constant of a kind
-const a = 42
-const b = 42.47
-const c = "James Bond"
-
-// Alternaive definistion
+// iota is good if you need a number that auto increments
 const (
-	d        = 34
-	e string = "Wisdom" // this const is typed, therefore cannot be changed
+	a = iota
+	b = iota
+	c = iota
+)
+
+// Alternatively
+// this resets
+const (
+	d = iota
+	e
+	f
 )
 
 func main() {
@@ -22,5 +26,9 @@ func main() {
 	fmt.Printf("%T\n", a)
 	fmt.Printf("%T\n", b)
 	fmt.Printf("%T\n", c)
+
+	fmt.Println(d)
+	fmt.Println(e)
+	fmt.Println(f)
 
 }
