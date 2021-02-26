@@ -1,39 +1,36 @@
 package main
 
-import "fmt"
+func main() {
+	r := factorial(4)
+	println(r)
 
-// CLOSURE
-// Closure is about enlosing the scope of a variable to make sure
-// its scope is limited
+	j := factorial2(4)
+	println(j)
 
-/*
-	A closure is function value that references variables from outside its own
-  function body,
-	i.e. and inner function that remembers and has access to variables in the local
-	scope in which it was created even after the outer function is done executin
-*/
-
-// increment() returns a fuction that returns an int
-func increment() func() int {
-	i := 0
-	return func() int {
-		i++
-		return i
-	}
+	l := factorial3(4)
+	println(l)
 }
 
-func main() {
-	nextInt := increment()
-	// The value keep incrementing because the inner anonymous function is
-	// keeping track of the value i in its outer scope, even though increment()
-	// is done executing
-	fmt.Println(nextInt())
-	fmt.Println(nextInt())
-	fmt.Println(nextInt())
-	print("\n")
+// RECURSION
+func factorial(n int) int {
+	if n == 0 {
+		return 1
+	}
+	return n * factorial(n-1)
+}
 
-	nextInt2 := increment()
-	fmt.Println(nextInt2())
-	fmt.Println(nextInt2())
-	fmt.Println(nextInt2())
+func factorial2(n int) int {
+	val := 1
+	for i := n; i > 0; i-- {
+		val = val * i
+	}
+	return val
+}
+
+func factorial3(n int) int {
+	val := 1
+	for ; n > 0; n-- {
+		val *= n
+	}
+	return val
 }
