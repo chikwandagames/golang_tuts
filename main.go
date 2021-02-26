@@ -4,10 +4,15 @@ import "fmt"
 
 //
 func main() {
-	var x [5]int
+	// Composite literal = type{ values }
+	// A composit literal, is an expression that creates a new instance
+	// each time its evaluated,
+	// they can be user to create Arrays, Structs, Slices and maps
+	x := []int{1, 2, 3, 4, 5, 6}
 	fmt.Println(x)
 
-	x[3] = 45
-	fmt.Println(x)
-	fmt.Println(len(x))
+	for i, v := range x {
+		fmt.Printf("%v: %v\n", i, v)
+	}
+
 }
