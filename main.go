@@ -2,20 +2,33 @@ package main
 
 import "fmt"
 
+type person struct {
+	first string
+	last  string
+}
+
+type secretAgent struct {
+	person
+	licenceToKill bool
+}
+
+// METHOD
+// (s secretAgent) is a Receiver
+func (s secretAgent) speak() {
+	fmt.Printf("I am %v %v \n", s.first, s.last)
+}
+
 func main() {
+	sa1 := secretAgent{
+		person: person{
+			first: "James",
+			last:  "Bond",
+		},
+		licenceToKill: true,
+	}
 
-	// Because foo() is defered, it will only be executed after main() exits
-	// We can use this to close, a file after a program finishes execution
-	defer foo()
-	bar()
+	fmt.Println(sa1)
 
-}
+	sa1.speak()
 
-func foo() {
-
-	fmt.Println("foo")
-}
-
-func bar() {
-	fmt.Println("bar")
 }
