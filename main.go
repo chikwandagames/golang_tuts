@@ -11,8 +11,13 @@ func main() {
 	x := []int{1, 2, 3, 4, 5, 6}
 	fmt.Println(x)
 
-	for i, v := range x {
-		fmt.Printf("%v: %v\n", i, v)
-	}
+	// up to but not including
+	fmt.Println(x[:3])
+
+	// from position 2 to the end
+	fmt.Println(x[2:])
+
+	// from start to second last element
+	fmt.Println(x[:len(x)-1])
 
 }
