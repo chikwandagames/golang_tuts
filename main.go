@@ -4,13 +4,14 @@ import "fmt"
 
 //
 func main() {
-	jb := []string{"James", "Bond", "Chocolate", "Martini"}
-	fmt.Println(jb)
+	// Rankings map
+	rm := map[string]int{
+		"england":  11,
+		"zimbabwe": 50,
+		"zambia":   67,
+	}
 
-	mp := []string{"Miss", "Moneypenny", "Strawberry", "Hazelnut"}
-	fmt.Println(mp)
-
-	xp := [][]string{jb, mp}
-	fmt.Println(xp)
+	fmt.Println(rm)
+	fmt.Println(rm["england"])
 
 }
