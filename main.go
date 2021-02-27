@@ -2,30 +2,46 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"runtime"
+	"sync"
 )
 
-// GORUTINES
-// Goroutines are like very lightweight threads managed by the go runtime
-// they enable us to create asychronous parrallel programs
-
-// Go routines is a way to turn a sequential program into a concurrent program
-// without the need for threads
-
-func compute(value int) {
-	for i := 0; i < value; i++ {
-		time.Sleep(time.Second)
-		fmt.Println(i)
-	}
-}
+var wg sync.WaitGroup
 
 func main() {
-	// Addging the go key word changes these calls to goroutines
-	// Now these calls will excecute Asynchronously
-	go compute(5)
-	go compute(5)
 
-	// this is just a hack to prevent the main function exiting
-	// before the goroutines have completed execution
-	fmt.Scanln()
+	fmt.Println("OS\t\t", runtime.GOOS)
+	fmt.Println("ARCH\t\t", runtime.GOARCH)
+	fmt.Println("CPUs\t\t", runtime.NumCPU())
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+
+	// Because main() completes execution before the goroutine
+	// we use a waitgroup to await the execution of the goroutine to complete
+	// before exiting main
+
+	// 1. add one thing to wait for
+	wg.Add(1)
+	// launch a new go routine
+	go foo()
+	bar()
+
+	fmt.Println("CPUs\t\t", runtime.NumCPU())
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+
+	// Stops the waiting
+	wg.Wait()
+}
+
+func foo() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("foo:", i)
+	}
+	// 2. remove that thing we are waiting for
+	wg.Done()
+}
+
+func bar() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("bar:", i)
+	}
 }
