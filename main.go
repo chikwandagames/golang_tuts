@@ -14,11 +14,15 @@ func main() {
 	fmt.Println(rm)
 	fmt.Println(rm["england"])
 
-	//
+	// add todd
 	rm["todd"] = 33
 
 	for k, v := range rm {
 		fmt.Printf("%v: %v\n", k, v)
 	}
+
+	// Deleting
+	delete(rm, "england")
+	fmt.Println(rm)
 
 }
