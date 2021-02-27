@@ -20,6 +20,12 @@ func compute(value int) {
 }
 
 func main() {
-	compute(5)
-	compute(5)
+	// Addging the go key word changes these calls to goroutines
+	// Now these calls will excecute Asynchronously
+	go compute(5)
+	go compute(5)
+
+	// this is just a hack to prevent the main function exiting
+	// before the goroutines have completed execution
+	fmt.Scanln()
 }
