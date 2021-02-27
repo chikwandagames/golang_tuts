@@ -2,29 +2,35 @@ package main
 
 import "fmt"
 
-//
+// When to use pointer
+// 1.
+// Pointers a good when don't want to pass large pieces of data
+// pointers let you simpley pass the address
+// this is good for performance
+// 2.
+// When you need to modify something at a certain location
+
 func main() {
-	a := 34
-	// The address of "a" is a pointer to an int
-	fmt.Printf("\"a\" memory address: %v\n", &a)
-	fmt.Printf("\"a\" type: %T \n", &a)
-
-	// b points to the address of a
-	var b *int = &a
-	// c points to the address of a
-	c := &a
-	fmt.Println(b)
-	fmt.Println(c)
-
-	// Dereferencing an address
-	fmt.Println(*c)
-	fmt.Println(*b)
-
-	fmt.Println(*&a)
-	fmt.Println(*&b)
-
-	// Dereference b and assign new value
-	*b = 100
+	a := 0
+	foo(a)
 	fmt.Println(a)
 
+	fmt.Println("")
+
+	fooPtr(&a)
+	fmt.Println(a)
+
+}
+
+func foo(x int) {
+	fmt.Println(x)
+	x = 43
+	fmt.Println(x)
+}
+
+func fooPtr(x *int) {
+	fmt.Println(x)
+	// Set the value an &x to 100
+	*x = 100
+	fmt.Println(x)
 }
