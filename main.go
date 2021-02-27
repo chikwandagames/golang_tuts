@@ -14,17 +14,11 @@ func main() {
 	fmt.Println(rm)
 	fmt.Println(rm["england"])
 
-	// comma ok idiom, lets you check a field exists before accessing
-	v, ok := rm["zaire"]
-	fmt.Println(v)
-	fmt.Println(ok)
+	//
+	rm["todd"] = 33
 
-	// we can check a value exists using an if statement
-	if v, ok := rm["zaire"]; ok {
-		fmt.Println(v)
+	for k, v := range rm {
+		fmt.Printf("%v: %v\n", k, v)
 	}
 
-	if v, ok := rm["england"]; ok {
-		fmt.Println(v)
-	}
 }
