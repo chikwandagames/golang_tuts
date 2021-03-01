@@ -16,6 +16,9 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(gs)
 
+	// Here we create a race condition, we have multipe go routines accessing
+	// and modifying the same value
+
 	for i := 0; i < gs; i++ {
 		go func() {
 			v := counter
@@ -29,11 +32,15 @@ func main() {
 			wg.Done()
 		}()
 		fmt.Println("Coroutines:\t", runtime.NumGoroutine())
+		fmt.Println("count:", counter)
 	}
 
 	// Wait until all the goroutines are done, before exiting
 	wg.Wait()
 	// fmt.Println("Coroutines:\t", runtime.NumGoroutine())
-	fmt.Println("count:", counter)
+	fmt.Println("final count:", counter)
+
+	/** to see race conditions int programe run**/
+	/**** go run -race main.go ***/
 
 }
