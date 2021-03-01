@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 )
 
 // go routines can comminicate between each other by means of channels
@@ -10,18 +9,18 @@ import (
 // same type
 
 func main() {
-	c := make(chan int)
-	var wg sync.WaitGroup
 
-	// Add 2 for each wait group
-	wg.Add(2)
+	c := make(chan int)
+	done := make(chan bool)
 
 	go func() {
 
 		for i := 0; i < 10; i++ {
 			c <- i
 		}
-		wg.Done()
+		// feed true into the done channel
+		done <- true
+
 	}()
 
 	go func() {
@@ -29,11 +28,17 @@ func main() {
 		for s := 0; s < 10; s++ {
 			c <- s
 		}
-		wg.Done()
+		done <- true
+
 	}()
 
 	go func() {
-		wg.Wait()
+		// 2 channels waiting for a value to come through
+		// <- means Read data from the channel done
+		// this basically throws a value away
+		// x := <- done, world save the value in x
+		<-done
+		<-done
 		close(c)
 	}()
 
