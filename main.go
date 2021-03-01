@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"sync"
 )
 
 // go routines can comminicate between each other by means of channels
@@ -10,31 +10,35 @@ import (
 // same type
 
 func main() {
-
-	// Channel declaration, unbufferd
 	c := make(chan int)
-	// 	c2 := make(chan int, 10), a channel that can take 10 ints
+	var wg sync.WaitGroup
 
-	// Here we have 2 goroutines accessing the same value, so they need to wait
-	// for each other, on goroutine can only access the value c when the othe has
-	// finished using the value
+	// Add 2 for each wait group
+	wg.Add(2)
 
 	go func() {
+
 		for i := 0; i < 10; i++ {
-			// Feed i into a the channel
-			// At this point code execution stops until something takes the value
-			// out of the channel i.e. <-c
 			c <- i
 		}
+		wg.Done()
 	}()
 
 	go func() {
-		for {
-			// fmt.Println(<-c), this receives data from a channel, and prints
-			fmt.Println(<-c)
+
+		for s := 0; s < 10; s++ {
+			c <- s
 		}
+		wg.Done()
 	}()
 
-	time.Sleep(time.Second)
+	go func() {
+		wg.Wait()
+		close(c)
+	}()
+
+	for n := range c {
+		fmt.Println(n)
+	}
 
 }
