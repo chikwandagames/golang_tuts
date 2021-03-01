@@ -2,46 +2,39 @@ package main
 
 import (
 	"fmt"
-	"runtime"
-	"sync"
+	"time"
 )
 
-var wg sync.WaitGroup
+// go routines can comminicate between each other by means of channels
+// Channels are typed, the data passed between routines must be of the
+// same type
 
 func main() {
 
-	fmt.Println("OS\t\t", runtime.GOOS)
-	fmt.Println("ARCH\t\t", runtime.GOARCH)
-	fmt.Println("CPUs\t\t", runtime.NumCPU())
-	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+	// Channel declaration, unbufferd
+	c := make(chan int)
+	// 	c2 := make(chan int, 10), a channel that can take 10 ints
 
-	// Because main() completes execution before the goroutine
-	// we use a waitgroup to await the execution of the goroutine to complete
-	// before exiting main
+	// Here we have 2 goroutines accessing the same value, so they need to wait
+	// for each other, on goroutine can only access the value c when the othe has
+	// finished using the value
 
-	// 1. add one thing to wait for
-	wg.Add(1)
-	// launch a new go routine
-	go foo()
-	bar()
+	go func() {
+		for i := 0; i < 10; i++ {
+			// Feed i into a the channel
+			// At this point code execution stops until something takes the value
+			// out of the channel i.e. <-c
+			c <- i
+		}
+	}()
 
-	fmt.Println("CPUs\t\t", runtime.NumCPU())
-	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+	go func() {
+		for {
+			// fmt.Println(<-c), this receives data from a channel, and prints
+			fmt.Println(<-c)
+		}
+	}()
 
-	// Stops the waiting
-	wg.Wait()
-}
+	time.Sleep(time.Second)
 
-func foo() {
-	for i := 0; i < 5; i++ {
-		fmt.Println("foo:", i)
-	}
-	// 2. remove that thing we are waiting for
-	wg.Done()
-}
-
-func bar() {
-	for i := 0; i < 5; i++ {
-		fmt.Println("bar:", i)
-	}
 }
