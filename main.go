@@ -6,42 +6,34 @@ import (
 	"sync"
 )
 
-var wg sync.WaitGroup
-
 func main() {
+	fmt.Println("CPUs \t\t", runtime.NumCPU())
+	fmt.Println("Goroutines:\t", runtime.NumGoroutine())
 
-	fmt.Println("OS\t\t", runtime.GOOS)
-	fmt.Println("ARCH\t\t", runtime.GOARCH)
-	fmt.Println("CPUs\t\t", runtime.NumCPU())
-	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+	counter := 0
+	const gs = 10
 
-	// Because main() completes execution before the goroutine
-	// we use a waitgroup to await the execution of the goroutine to complete
-	// before exiting main
+	var wg sync.WaitGroup
+	wg.Add(gs)
 
-	// 1. add one thing to wait for
-	wg.Add(1)
-	// launch a new go routine
-	go foo()
-	bar()
+	for i := 0; i < gs; i++ {
+		go func() {
+			v := counter
+			// time.Sleep(time.Second)
+			// Gosched(), yields the processor alowing other goroutines to run.
+			// it does not suspend the current goroutine, so execution resumes automatically
+			// runtime.Gosched(), simply says go ahead and run something else
+			runtime.Gosched()
+			v++
+			counter = v
+			wg.Done()
+		}()
+		fmt.Println("Coroutines:\t", runtime.NumGoroutine())
+	}
 
-	fmt.Println("CPUs\t\t", runtime.NumCPU())
-	fmt.Println("Goroutines\t", runtime.NumGoroutine())
-
-	// Stops the waiting
+	// Wait until all the goroutines are done, before exiting
 	wg.Wait()
-}
+	// fmt.Println("Coroutines:\t", runtime.NumGoroutine())
+	fmt.Println("count:", counter)
 
-func foo() {
-	for i := 0; i < 5; i++ {
-		fmt.Println("foo:", i)
-	}
-	// 2. remove that thing we are waiting for
-	wg.Done()
-}
-
-func bar() {
-	for i := 0; i < 5; i++ {
-		fmt.Println("bar:", i)
-	}
 }
