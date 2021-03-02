@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 )
 
 // go routines can comminicate between each other by means of channels
@@ -10,37 +11,32 @@ import (
 
 func main() {
 
+	n := 10
+
+	// Create 2 channels
 	c := make(chan int)
 	done := make(chan bool)
 
-	go func() {
+	for i := 0; i < n; i++ {
+		go func() {
+			for j := 0; j < 10; j++ {
+				c <- j
+			}
+			done <- true
+		}()
 
-		for i := 0; i < 10; i++ {
-			c <- i
+	}
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+
+	//
+	go func() {
+		for i := 0; i < n; i++ {
+			<-done
 		}
-		// feed true into the done channel
-		done <- true
-
-	}()
-
-	go func() {
-
-		for s := 0; s < 10; s++ {
-			c <- s
-		}
-		done <- true
-
-	}()
-
-	go func() {
-		// 2 channels waiting for a value to come through
-		// <- means Read data from the channel done
-		// this basically throws a value away
-		// x := <- done, world save the value in x
-		<-done
-		<-done
 		close(c)
 	}()
+
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
 
 	for n := range c {
 		fmt.Println(n)
