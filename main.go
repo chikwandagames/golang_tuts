@@ -11,10 +11,25 @@ import "fmt"
 // Any type that implements Error() string is also of type error
 
 func main() {
-	n, err := fmt.Println("hello")
+	var answer1, answer2, answer3 string
+
+	fmt.Print("Name: ")
+	_, err := fmt.Scan(&answer1)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	// Prints 6 (number of bytes) because of the new line character on printLN
-	fmt.Println(n)
+
+	fmt.Print("Favourite food: ")
+	_, err = fmt.Scan(&answer2)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Print("Favourite sport: ")
+	_, err = fmt.Scan(&answer3)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(answer1, answer2, answer3)
 }
